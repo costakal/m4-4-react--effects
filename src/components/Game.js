@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import cookieSrc from "../cookie.svg";
+import Item from "./Item";
 
 const items = [
   { id: "cursor", name: "Cursor", cost: 10, value: 1 },
@@ -19,6 +20,14 @@ const Game = () => {
     farm: 0,
   };
 
+  const handleClick = () => {
+    console.log("Click");
+  };
+
+  const itemList = items.map((item) => (
+    <Item item={item} numOwned={purchasedItems} handleClick={handleClick} />
+  ));
+
   return (
     <Wrapper>
       <GameArea>
@@ -34,7 +43,7 @@ const Game = () => {
 
       <ItemArea>
         <SectionTitle>Items:</SectionTitle>
-        {/* TODO: Add <Item> instances here, 1 for each item type. */}
+        {itemList}
       </ItemArea>
       <HomeLink to="/">Return home</HomeLink>
     </Wrapper>
