@@ -50,6 +50,7 @@ const Game = () => {
           } else {
             setnumCookies(numCookies - item.cost);
             switch (item.id) {
+              default:
               case "cursor":
                 setPurchasedItems({
                   ...purchasedItems,
