@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -12,21 +12,52 @@ const items = [
 ];
 
 const Game = () => {
-  // TODO: Replace this with React state!
-  const numCookies = 100;
-  const purchasedItems = {
+  const [numCookies, setnumCookies] = useState(100);
+  const [purchasedItems, setPurchasedItems] = useState({
     cursor: 0,
     grandma: 0,
     farm: 0,
-  };
+  });
 
-  const handleClick = () => {
-    console.log("Click");
-  };
+  console.log("number of cookies", numCookies);
+  console.log(purchasedItems);
 
-  const itemList = items.map((item) => (
-    <Item item={item} numOwned={purchasedItems} handleClick={handleClick} />
-  ));
+  const itemList = items.map((item) => {
+    return (
+      <Item
+        key={item.id}
+        item={item}
+        numOwned={purchasedItems[item.id]}
+        handleClick={() => {
+          if (numCookies < item.cost) {
+            window.alert("Not Enough cookies");
+          } else {
+            setnumCookies(numCookies - item.cost);
+            switch (item.id) {
+              case "cursor":
+                setPurchasedItems({
+                  ...purchasedItems,
+                  cursor: purchasedItems.cursor + 1,
+                });
+                break;
+              case "grandma":
+                setPurchasedItems({
+                  ...purchasedItems,
+                  grandma: purchasedItems.grandma + 1,
+                });
+                break;
+              case "farm":
+                setPurchasedItems({
+                  ...purchasedItems,
+                  farm: purchasedItems.farm + 1,
+                });
+                break;
+            }
+          }
+        }}
+      />
+    );
+  });
 
   return (
     <Wrapper>
@@ -36,7 +67,7 @@ const Game = () => {
           {/* TODO: Calcuate the cookies per second and show it here: */}
           <strong>0</strong> cookies per second
         </Indicator>
-        <Button>
+        <Button onClick={() => setnumCookies(numCookies + 1)}>
           <Cookie src={cookieSrc} />
         </Button>
       </GameArea>
