@@ -26,6 +26,18 @@ const Game = () => {
     document.title = `${numCookies} Cookies - Cookie Clicker Game`;
   });
 
+  useEffect(() => {
+    const handleKeydown = (ev) => {
+      if (ev.code === "Space") {
+        setnumCookies(numCookies + 1);
+      }
+    };
+    window.addEventListener("keydown", handleKeydown);
+    return () => {
+      window.removeEventListener("keydown", handleKeydown);
+    };
+  });
+
   // This renders the amount of cookies generated based on items and time
   const calculateCookiesPerTick = (items) => {
     const tick = items.cursor * 1 + items.grandma * 10 + items.farm * 80;
