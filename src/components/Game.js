@@ -50,11 +50,12 @@ const Game = () => {
   }, 1000);
 
   // This renders the List of Items usable
-  const itemList = items.map((item) => {
+  const itemList = items.map((item, index) => {
     return (
       <Item
         key={item.id}
         item={item}
+        trackOrder={index}
         numOwned={purchasedItems[item.id]}
         handleClick={() => {
           if (numCookies < item.cost) {

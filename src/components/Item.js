@@ -1,9 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-const Item = ({ item, numOwned, handleClick }) => {
+const Item = ({ item, numOwned, handleClick, trackOrder }) => {
+  const firstItem = React.useRef(null);
+
+  React.useEffect(() => {
+    if (trackOrder === 0) {
+      firstItem.current.focus();
+    }
+  }, []);
+
   return (
-    <ItemDetails onClick={() => handleClick()}>
+    <ItemDetails ref={firstItem} onClick={() => handleClick()}>
       <Name>{item.name}</Name>
       <Details>
         <ItemRules>
@@ -16,7 +24,7 @@ const Item = ({ item, numOwned, handleClick }) => {
   );
 };
 
-const ItemDetails = styled.div``;
+const ItemDetails = styled.button``;
 const Name = styled.h2``;
 const ItemRules = styled.div``;
 const Details = styled.div``;
