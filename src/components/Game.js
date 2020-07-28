@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 
 import cookieSrc from "../cookie.svg";
 import Item from "./Item";
+
+//hooks
 import useInterval from "../hooks/use-interval.hook";
+import useDocumentTitle from "../hooks/useDocumentTitle";
+import useKeydown from "../hooks/useKeydown";
 
 const items = [
   { id: "cursor", name: "Cursor", cost: 10, value: 1 },
@@ -19,29 +23,12 @@ const Game = () => {
     grandma: 0,
     farm: 0,
   });
-  // console.log("Number of cookies: ", numCookies);
-  // console.log("Items in inventory: ", purchasedItems);
 
-  useEffect(() => {
-    document.title = `${numCookies} Cookies - Cookie Clicker Game`;
-  });
+  useDocumentTitle(numCookies);
+  useKeydown("Space", () => setnumCookies(numCookies + 1));
 
-  useEffect(() => {
-    const handleKeydown = (ev) => {
-      if (ev.code === "Space") {
-        setnumCookies(numCookies + 1);
-      }
-    };
-    window.addEventListener("keydown", handleKeydown);
-    return () => {
-      window.removeEventListener("keydown", handleKeydown);
-    };
-  });
-
-  // This renders the amount of cookies generated based on items and time
   const calculateCookiesPerTick = (items) => {
     const tick = items.cursor * 1 + items.grandma * 10 + items.farm * 80;
-    // console.log("Amount of cookies per second ", tick);
     return tick;
   };
   useInterval(() => {
@@ -49,7 +36,6 @@ const Game = () => {
     setnumCookies(numCookies + numOfGeneratedCookies);
   }, 1000);
 
-  // This renders the List of Items usable
   const itemList = items.map((item, index) => {
     return (
       <Item

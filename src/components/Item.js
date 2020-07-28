@@ -8,7 +8,7 @@ const Item = ({ item, numOwned, handleClick, trackOrder }) => {
     if (trackOrder === 0) {
       firstItem.current.focus();
     }
-  }, []);
+  }, [trackOrder]);
 
   return (
     <ItemDetails ref={firstItem} onClick={() => handleClick()}>
